@@ -67,7 +67,7 @@
     </div>
     <!-- ./col -->
 </div>
-<!-- Log on to codeastro.com for more projects! -->
+
 
 
 <div class="row">
@@ -119,7 +119,7 @@
     </div>
     <!-- ./col -->
     <div id="container" class=" col-xs-6"></div>
-</div><!-- Log on to codeastro.com for more projects! -->
+</div>
 
 @endsection
 

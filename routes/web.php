@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('products', 'ProductController');
 	Route::get('/apiProducts', 'ProductController@apiProducts')->name('api.products');
+	Route::get('/low-stock-products', [ProductController::class, 'lowStock']);
 
 	Route::resource('productsOut', 'ProductKeluarController');
 	Route::get('/apiProductsOut', 'ProductKeluarController@apiProductsOut')->name('api.productsOut');

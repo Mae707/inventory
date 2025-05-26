@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- Log on to codeastro.com for more projects! -->
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>I M S</title>
@@ -12,7 +12,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('assets/bower_components/font-awesome/css/font-awesome.min.css')}} ">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="{{ asset('assets/bower_components/Ionicons/css/ionicons.min.css')}} ">
+    <link rel="stylesheet" href="https://unpkg.com/ionicons@5.5.2/dist/css/ionicons.min.css">
 
     {{-- SweetAlert2 --}}
     <script src="{{ asset('assets/sweetalert2/sweetalert2.min.js') }}"></script>
@@ -24,14 +24,14 @@
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect. -->
-    <link rel="stylesheet" href="{{ asset('assets/dist/css/skins/skin-green.min.css')}} ">
+    <link rel="stylesheet" href="{{ asset('assets/dist/css/skins/skin-blue.min.css')}} ">
 
 @yield('top')
 
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-green sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
     <!-- Main Header -->
@@ -54,6 +54,40 @@
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+                    <!-- Low Stock Notification -->
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Low Stock Notifications">
+                            <i class="fa fa-bell-o"></i>
+                            @if(count($lowStock) > 0)
+                                <span class="label label-warning">{{ count($lowStock) }}</span>
+                            @endif
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">
+                                @if(count($lowStock) > 0)
+                                    You have {{ count($lowStock) }} low stock product{{ count($lowStock) > 1 ? 's' : '' }}
+                                @else
+                                    No low stock products
+                                @endif
+                            </li>
+                            
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    @foreach($lowStock as $product)
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-warning text-yellow"></i>
+                                                {{ $product->nama }} ({{ $product->qty }} left)
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="{{ route('products.index') }}">View all products</a></li>
+                        </ul>
+                    </li>
+
                     <!-- Messages: style can be found in dropdown.less-->
                     <!-- User Account Menu -->
                     <li class="dropdown user user-menu">
@@ -74,6 +108,7 @@
                                     <small>{{ \Auth::user()->email  }}</small>
                                 </p>
                             </li>
+                            
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 {{--<div class="pull-left">--}}
@@ -109,7 +144,6 @@
 
             @yield('content')
 
-
         </section>
         <!-- /.content -->
     </div>
@@ -119,7 +153,7 @@
     <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-            Developed by Revan Apriyandi
+            Developed by IT2R4
         </div>
         <!-- Default to the left -->
         <?php $date = date('Y')?>

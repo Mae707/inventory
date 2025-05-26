@@ -185,4 +185,21 @@ class ProductController extends Controller
             ->rawColumns(['category_name','show_photo','action'])->make(true);
 
     }
+
+    public function lowStock()
+    {
+        $lowStockProducts = Product::where('qty', '<=', 10)->get();
+        return response()->json($lowStockProducts);
+    }
+
+    public function search(Request $request)
+        {
+            $search = $request->get('search');
+            $products = Product::where('nama', 'LIKE', "%{$search}%")
+                ->orWhere('harga', 'LIKE', "%{$search}%")
+                ->orWhere('qty', 'LIKE', "%{$search}%")
+                ->get();
+
+            return response()->json($products);
+    }
 }
