@@ -1,10 +1,6 @@
-**Log on to codeastro.com for more projects!***
 
+**Developed by IT2R4*
 
-**Developed by Revan Apriyandi**
-
-
-**Check the Website's Post Page for all the Installation Instructions**
 
 
 ---Admin Login Details---
@@ -14,6 +10,6 @@ Password: codeastro.com
 
 
 
-**Check the Website's Post Page for all the Installation Instructions**
+
 
 
