@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Product;
+use App\Warehouse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -24,8 +25,10 @@ class ProductController extends Controller
             ->get()
             ->pluck('name','id');
 
+        $warehouses = Warehouse::orderBy('name', 'ASC')->pluck('name', 'id');
+
         $producs = Product::all();
-        return view('products.index', compact('category'));
+       return view('products.index', compact('category', 'warehouses'));
     }
 
     /**
@@ -56,6 +59,9 @@ class ProductController extends Controller
             'qty'           => 'required',
             'image'         => 'required',
             'category_id'   => 'required',
+            'expiry_date'   => 'nullable|date',
+            'status'        => 'required|in:active,inactive',  
+            'warehouse_id' => 'nullable|exists:warehouses,id'        
         ]);
 
         $input = $request->all();
@@ -120,6 +126,10 @@ class ProductController extends Controller
             'qty'           => 'required',
 //            'image'         => 'required',
             'category_id'   => 'required',
+            'expiry_date'   => 'nullable|date',
+            'status'        => 'required|in:active,inactive',
+            'warehouse_id' => 'nullable|exists:warehouses,id'
+
         ]);
 
         $input = $request->all();
@@ -165,26 +175,48 @@ class ProductController extends Controller
         ]);
     }
 
-    public function apiProducts(){
-        $product = Product::all();
 
-        return Datatables::of($product)
-            ->addColumn('category_name', function ($product){
-                return $product->category->name;
-            })
-            ->addColumn('show_photo', function($product){
-                if ($product->image == NULL){
-                    return 'No Image';
-                }
-                return '<img class="rounded-square" width="50" height="50" src="'. url($product->image) .'" alt="">';
-            })
-            ->addColumn('action', function($product){
-                return'<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
-                    '<a onclick="deleteData('. $product->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
-            })
-            ->rawColumns(['category_name','show_photo','action'])->make(true);
+    public function apiProducts()
+{
+    $products = Product::with(['category', 'warehouse'])->select('products.*')->get(); // <-- add ->get()
 
+    return Datatables::of($products) // <-- use $products, not $product
+        ->addColumn('category_name', function ($product){
+            return $product->category ? $product->category->name : '-';
+        })
+        ->addColumn('warehouse_name', function ($product) {
+            return $product->warehouse ? $product->warehouse->name : '-';
+        })
+        ->addColumn('show_photo', function($product){
+            if ($product->image == NULL){
+                return 'No Image';
+            }
+            return '<img class="rounded-square" width="50" height="50" src="'. url($product->image) .'" alt="">';
+        })
+        ->addColumn('status', function($product) {
+            $class = $product->status == 'active' ? 'label label-success' : 'label label-danger';
+            return '<span class="'.$class.'">'.ucfirst($product->status).'</span>';
+        })
+        ->addColumn('action', function($product){
+            return'<a onclick="editForm('. $product->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> Edit</a> ' .
+                '<a onclick="deleteData('. $product->id .')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i> Delete</a>';
+        })
+        ->addColumn('expiry_date', function($product){
+            return $product->expiry_date ? \Carbon\Carbon::parse($product->expiry_date)->format('Y-m-d') : '-';
+        })
+        ->rawColumns(['status','category_name','warehouse_name','show_photo','action'])
+        ->make(true);
+}
+
+
+  public function status()
+    {
+        $products = Product::where('status', '!=', 'active')->get();
+        return view('status.index', compact('products'));
     }
+
+
+
 
     public function lowStock()
     {

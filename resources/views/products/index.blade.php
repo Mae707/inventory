@@ -25,8 +25,11 @@
                     <th>Name</th>
                     <th>Price</th>
                     <th>Qty.</th>
+                    <th>Status</th>
+                    <th>Expiry Date</th> 
                     <th>Image</th>
                     <th>Category</th>
+                    <th>Warehouse</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -73,8 +76,11 @@
                 {data: 'nama', name: 'nama'},
                 {data: 'harga', name: 'harga'},
                 {data: 'qty', name: 'qty'},
+                {data: 'status', name: 'status'}, 
+                {data: 'expiry_date', name: 'expiry_date'}, 
                 {data: 'show_photo', name: 'show_photo'},
                 {data: 'category_name', name: 'category_name'},
+                 {data: 'warehouse_name', name: 'warehouse_name'}, 
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
@@ -104,6 +110,9 @@
                     $('#harga').val(data.harga);
                     $('#qty').val(data.qty);
                     $('#category_id').val(data.category_id);
+                    $('#status').val(data.status);
+                    $('#expiry_date').val(data.expiry_date); 
+                    $('#warehouse_id').val(data.warehouse_id);
                 },
                 error : function() {
                     alert("Nothing Data");

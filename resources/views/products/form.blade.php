@@ -47,6 +47,33 @@
                             <span class="help-block with-errors"></span>
                         </div>
 
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select name="status" id="status" class="form-control" required>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expiry_date">Expiry Date</label>
+                            <input type="date" name="expiry_date" id="expiry_date" class="form-control" value="{{ old('expiry_date', isset($product) ? $product->expiry_date : '') }}">
+                        </div>
+
+                       <div class="form-group">
+                            <label for="warehouse_id">Warehouse</label>
+                            <select name="warehouse_name" id="warehouse_name" class="form-control">
+                                <option value="">-- Select Warehouse --</option>
+                                @foreach($warehouses as $warehouse)
+                                    <option value="{{ $warehouse->name }}" {{ (isset($product) && $product->warehouse_name == $warehouse->name) ? 'selected' : '' }}>{{ $warehouse->name }}</option>
+                                @endforeach
+                            </select>
+   
+                
+                        </div>
+
+
+
 
 
 

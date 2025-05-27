@@ -65,4 +65,11 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::resource('user', 'UserController');
 	Route::get('/apiUser', 'UserController@apiUsers')->name('api.users');
+
+	Route::get('warehouses', 'WarehouseController@index')->name('warehouses.index');
+	Route::get('expiry-alerts', 'ExpiryAlertController@index')->name('expiry_alerts.index');
+	Route::get('stocks/low', 'StockController@low')->name('stocks.low');
+	Route::get('products/status', 'ProductController@status')->name('products.status');
+	Route::resource('warehouses', 'WarehouseController');
+
 });

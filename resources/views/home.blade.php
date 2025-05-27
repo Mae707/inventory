@@ -6,7 +6,6 @@
 @section('content')
 <!-- Small boxes (Stat box) -->
 <div class="row">
-    <!-- Log on to codeastro.com for more projects! -->
     <div class="col-lg-3 col-xs-6">
         <!-- small box -->
         <div class="small-box bg-aqua">
@@ -117,10 +116,56 @@
             <a href="{{ route('productsOut.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
         </div>
     </div>
+      <!-- Warehouse Count -->
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-navy">
+                <div class="inner">
+                    <h3>{{ \App\Warehouse::count() }}</h3>
+                    <p>Warehouses</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-building"></i>
+                </div>
+                <a href="{{ route('warehouses.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
     <!-- ./col -->
     <div id="container" class=" col-xs-6"></div>
+
+    
 </div>
 
+<div class="row">
+          
+        <!-- Expiring Soon Products -->
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-orange">
+                <div class="inner">
+                    <h3>{{ \App\Product::where('expiry_date', '<', \Carbon\Carbon::now()->addDays(30))->count() }}</h3>
+                    <p>Expiring in 30 Days</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-exclamation-triangle"></i>
+                </div>
+                <a href="{{ route('expiry_alerts.index') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+
+       <!-- Low Stock Products 
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box bg-teal">
+                <div class="inner">
+                    <h3>{{ \App\Stock::where('quantity', '<', 10)->count() }}</h3>
+                    <p>Low Stock (All Warehouses)</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-cubes"></i>
+                </div>
+                <a href="{{ route('stocks.low') }}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>-->
+
+</div>
 @endsection
 
 @section('top')
