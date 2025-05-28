@@ -80,7 +80,7 @@
                 {data: 'expiry_date', name: 'expiry_date'}, 
                 {data: 'show_photo', name: 'show_photo'},
                 {data: 'category_name', name: 'category_name'},
-                 {data: 'warehouse_name', name: 'warehouse_name'}, 
+                {data: 'warehouse_name', name: 'warehouse_name'}, 
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });

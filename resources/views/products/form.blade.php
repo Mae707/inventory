@@ -60,17 +60,7 @@
                             <input type="date" name="expiry_date" id="expiry_date" class="form-control" value="{{ old('expiry_date', isset($product) ? $product->expiry_date : '') }}">
                         </div>
 
-                       <div class="form-group">
-                            <label for="warehouse_id">Warehouse</label>
-                            <select name="warehouse_name" id="warehouse_name" class="form-control">
-                                <option value="">-- Select Warehouse --</option>
-                                @foreach($warehouses as $warehouse)
-                                    <option value="{{ $warehouse->name }}" {{ (isset($product) && $product->warehouse_name == $warehouse->name) ? 'selected' : '' }}>{{ $warehouse->name }}</option>
-                                @endforeach
-                            </select>
-   
-                
-                        </div>
+
 
 
 

@@ -27,7 +27,7 @@ class ProductController extends Controller
 
         $warehouses = Warehouse::orderBy('name', 'ASC')->pluck('name', 'id');
 
-        $producs = Product::all();
+        $products = Product::all();
        return view('products.index', compact('category', 'warehouses'));
     }
 
@@ -103,7 +103,7 @@ class ProductController extends Controller
         $category = Category::orderBy('name','ASC')
             ->get()
             ->pluck('name','id');
-        $product = Product::find($id);
+        $product = Product::with (['category', 'warehouse'])->find($id);
         return $product;
     }
 
